@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎉 HAPPY BIRTHDAY ICAAA 🎂</title>
+  <style>
+    /* ====== Base ====== */
+    :root { --glass: rgba(255,255,255,0.1); }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+      text-align: center; color: #fff;
+      background: linear-gradient(135deg,#ff6a88,#ff99ac,#fbc2eb,#a18cd1);
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+      overflow-x: hidden;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    h1 {
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      margin: 60px 16px 10px;
+      animation: fadeIn 2.2s ease-in-out;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    }
+    #message {
+      font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+      margin: 16px auto 0;
+      max-width: 980px;
+      display: none;
+      animation: fadeIn 1s ease-in-out forwards;
+      white-space: pre-line;
+      line-height: 1.5;
+      padding: 0 16px;
+    }
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+    .btn {
+      margin-top: 22px; padding: 12px 24px;
+      font-size: 1.1em; border: none; border-radius: 999px;
+      cursor: pointer; background: #fff; color: #ff6a88;
+      transition: .25s; box-shadow: 0 0 15px rgba(255,255,255,.6);
+    }
+    .btn:hover { transform: scale(1.08); background: #ff6a88; color: #fff; }
+
+    #cake {
+      margin-top: 22px; display: none; width: 220px;
+      animation: fadeIn 1.2s ease-in-out forwards;
+      filter: drop-shadow(0 6px 20px rgba(0,0,0,.35));
+    }
+
+    canvas {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+
+    /* ====== Balon ====== */
+    .balloon {
+      position: absolute; bottom: -150px;
+      font-size: 2.2rem; animation: floatUp 8s linear forwards;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,.25));
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1;}
+      100% { transform: translateY(-120vh); opacity: 0;}
+    }
+
+    /* ====== Sparkle ====== */
+    .sparkle {
+      position: absolute; width: 5px; height: 5px; background: #fff;
+      border-radius: 50%; animation: twinkle 2s infinite;
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: .2; transform: scale(.5);}
+      50% { opacity: 1; transform: scale(1.3);}
+    }
+
+    /* ====== Galeri ====== */
+    #gallery {
+      margin: 38px auto 70px; padding: 20px 16px 28px;
+      background: var(--glass); border-radius: 18px;
+      max-width: 1100px; backdrop-filter: blur(6px);
+      box-shadow: 0 8px 30px rgba(0,0,0,.12);
+      display: none; /* awalnya disembunyikan */
+    }
+    #gallery h2 {
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      margin: 0 0 16px;
+      text-shadow: 1px 1px 6px rgba(0,0,0,.28);
+    }
+    .photos {
+      display: grid; gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      max-width: 980px; margin: 0 auto;
+    }
+    .photo {
+      position: relative; overflow: hidden; border-radius: 14px;
+      aspect-ratio: 1 / 1;
+      box-shadow: 0 10px 22px rgba(0,0,0,.25);
+      transition: transform .28s ease;
+      cursor: zoom-in;
+    }
+    .photo:hover { transform: translateY(-4px) scale(1.02); }
+    .photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block; transform: scale(1.02);
+      transition: transform .4s ease;
+    }
+    .photo:hover img { transform: scale(1.07); }
+
+    #lightbox {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.7);
+      display: none; align-items: center; justify-content: center;
+      padding: 20px; z-index: 1000;
+    }
+    #lightbox.active { display: flex; }
+    .lightbox-inner {
+      max-width: min(92vw, 1000px);
+      max-height: 84vh; position: relative;
+    }
+    #lightbox img {
+      width: 100%; height: auto; display: block;
+      border-radius: 16px; box-shadow: 0 12px 30px rgba(0,0,0,.5);
+    }
+    .lightbox-caption {
+      margin-top: 10px; font-size: .95rem; opacity: .9;
+    }
+    .lightbox-close {
+      position: absolute; top: -10px; right: -10px;
+      background: #fff; color: #333; border: none; cursor: pointer;
+      border-radius: 999px; width: 40px; height: 40px; font-size: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.35);
+    }
+    .helper-note {
+      font-size: .9rem; opacity: .85; margin-top: 8px;
+    }
+    .bottom-spacer { height: 28px; }
+  </style>
+</head>
+<body>
+  <h1>🎂 HAPPY BIRTHDAY ICAA! 🎉</h1>
+  <button class="btn" onclick="showMessage()">🎁 pencet kocak</button>
+
+  <h2 id="message"></h2>
+
+  <img
+    id="cake"
+    src="images/cake.gif"
+    alt="Birthday Cake"
+    onerror="this.onerror=null; this.src='https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif';"
+  />
+
+  <canvas id="confetti"></canvas>
+
+  <audio id="music" src="audio/happy-birthday.mp3" preload="auto"></audio>
+  <audio id="cheer"  src="audio/cheer.mp3" preload="auto"></audio>
+
+  <!-- Galeri Foto -->
+  <section id="gallery" aria-label="Galeri Foto ICAA">
+    <h2>📸 Kenangan Seru Bareng ICAA</h2>
+    <p class="helper-note">Klik foto untuk memperbesar. Tambahkan fotomu ke folder <code>images/</code> lalu daftar di variabel <code>galleryImages</code>.</p>
+    <div class="photos" id="photos"></div>
+  </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Perbesar Foto">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" aria-label="Tutup" title="Tutup">&times;</button>
+      <img id="lightbox-img" src="" alt="Foto diperbesar" />
+      <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <div class="bottom-spacer"></div>
+
+  <script>
+    function showMessage() {
+      typeWriter(
+`💖 May your special day be filled with endless smiles,
+warm hugs, and unforgettable moments of love and joy!
+Semoga yang di semogakan tersemogakan 💖`
+      );
+      document.getElementById("cake").style.display = "block";
+      document.getElementById("gallery").style.display = "block"; // munculkan galeri
+
+      try { document.getElementById("music").play(); } catch(e) {}
+      try { document.getElementById("cheer").play(); } catch(e) {}
+      startConfetti();
+      releaseBalloons();
+      createSparkles();
+    }
+
+    function typeWriter(text) {
+      let i = 0;
+      const el = document.getElementById("message");
+      el.style.display = "block";
+      el.textContent = "";
+      (function typing() {
+        if (i < text.length) {
+          el.textContent += text.charAt(i++);
+          setTimeout(typing, 26);
+        }
+      })();
+    }
+
+    /* Konfeti, balon, sparkle sama seperti sebelumnya */
+
+    /* Galeri */
+    const galleryImages = [
+      { src: "images/ica1.jpg", caption: "Momen 1" },
+      { src: "images/ica2.jpg", caption: "Momen 2" },
+      { src: "images/ica3.jpg", caption: "Momen 3" },
+    ];
+
+    function buildGallery() {
+      const container = document.getElementById('photos');
+      container.innerHTML = "";
+      galleryImages.forEach(item => {
+        const figure = document.createElement('figure');
+        figure.className = 'photo';
+        const img = document.createElement('img');
+        img.loading = "lazy";
+        img.src = item.src;
+        img.alt = item.caption || "Foto kenangan";
+        img.addEventListener('click', () => openLightbox(item.src, item.caption));
+        figure.appendChild(img);
+        container.appendChild(figure);
+      });
+    }
+
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbCap = document.getElementById('lightbox-caption');
+    const lbClose = document.querySelector('.lightbox-close');
+
+    function openLightbox(src, caption='') {
+      lbImg.src = src;
+      lbCap.textContent = caption;
+      lb.classList.add('active');
+    }
+    function closeLightbox() {
+      lb.classList.remove('active');
+      lbImg.src = "";
+      lbCap.textContent = "";
+    }
+    lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
+    lbClose.addEventListener('click', closeLightbox);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lb.classList.contains('active')) closeLightbox();
+    });
+
+    document.addEventListener('DOMContentLoaded', buildGallery);
+  </script>
+</body>
+</html>
